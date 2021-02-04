@@ -4,7 +4,6 @@ class ScreenPainter {
         this.canvas.width = canvasCfg.width;
         this.canvas.height = canvasCfg.height;
         this.canvas.color = canvasCfg.color;
-
         this.ctx = this.canvas.getContext(canvasCfg.context);
 
         document.body.append(this.canvas);
