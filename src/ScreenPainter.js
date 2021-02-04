@@ -1,11 +1,12 @@
 class ScreenPainter {
-    constructor(canvasCfg) {
+    constructor(config) {
         this.canvas = document.createElement('canvas');
-        this.canvas.width = canvasCfg.width;
-        this.canvas.height = canvasCfg.height;
-        this.canvas.color = canvasCfg.color;
-        this.ctx = this.canvas.getContext(canvasCfg.context);
+        
+        this.canvas.width = config.width;
+        this.canvas.height = config.height;
+        this.canvas.color = config.color;
 
+        this.ctx = this.canvas.getContext(config.context);
         document.body.append(this.canvas);
     }
 
@@ -19,7 +20,7 @@ class ScreenPainter {
 }
 
 ScreenPainter.prototype.clearPaintings = function() {
-    this.paintQuadrilateral({
+    this.paintQuadrilaterals({
         x: 0,
         y: 0,
         color: this.canvas.color,
@@ -28,7 +29,23 @@ ScreenPainter.prototype.clearPaintings = function() {
     });
 }
 
-ScreenPainter.prototype.paintQuadrilateral = function(that) {
-    this.ctx.fillStyle = that.color;
-    this.ctx.fillRect(that.x, that.y, that.width, that.height)
+ScreenPainter.prototype.paintQuadrilaterals = function(objs, immutableDimensions) {
+    if (!Array.isArray(objs)) {
+        objs = [objs];
+    }
+
+    if (immutableDimensions) {
+        var immutableW = immutableDimensions.width;
+        var immutableH = immutableDimensions.height;
+    }
+
+    for (let obj of objs) {
+        this.ctx.fillStyle = obj.color;
+        this.ctx.fillRect(
+            obj.x, 
+            obj.y, 
+            immutableW ? immutableW : obj.width,
+            immutableH ? immutableH : obj.height
+        )
+    }
 }
