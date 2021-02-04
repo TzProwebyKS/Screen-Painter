@@ -1,6 +1,6 @@
 class ScreenPainter {
     constructor(config) {
-        this.canvas = document.createElement('canvas');
+        this.canvas = document.createElement("canvas");
         
         this.canvas.width = config.width;
         this.canvas.height = config.height;
